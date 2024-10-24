@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+import re
 from tkcalendar import Calendar, DateEntry
 
 from view import *
@@ -39,18 +40,25 @@ app_name.place(x=10, y=20)
 global tree
 
 def insert_info():
-    nome = e_name.get()
-    email = e_email.get()
-    tel = e_tel.get()
-    birth = e_birth.get()
-    team = e_class.get()
-    grade = e_grade.get()
+    try:
+        nome = e_name.get()
+        email = e_email.get()
+        tel = e_tel.get()
+        birth = e_birth.get()
+        team = e_class.get()
+        grade = e_grade.get()
 
-    data = [nome, email, tel, birth, team, grade]
+        if not nome or not email or not birth or not team or not grade:
+            messagebox.showerror('Erro', 'Por favor, preencha todos os campos')
+            return
 
-    if data =='':
-        messagebox.showerror('Erro', 'preencha todos os campos pro favor.')
-    else:
+        email_regex = r'^[a-z0-9_.+-]+@[a-z0-9-]+\.[a-z0-9-.]+$'
+
+        if not re.match(email_regex, email):
+            messagebox.showerror('Erro', 'Por favor, insira um email válido.')
+            return
+
+        data = [nome, email, tel, birth, team, grade]
         Insert(data)
         messagebox.showinfo('Sucesso', 'Aluno foi cadastrado com sucesso.')
 
@@ -60,11 +68,13 @@ def insert_info():
         e_birth.delete(0, 'end')
         e_class.delete(0, 'end')
         e_grade.delete(0, 'end')
-    
-    for widget in frame_output.winfo_children():
-        widget.destroy()
+        
+        for widget in frame_output.winfo_children():
+            widget.destroy()
 
-    Display()
+        Display()
+    except Exception as e:
+        messagebox.showerror('Erro', f'Ocorreu um erro: {e}')
 
 def update_info():
     try:

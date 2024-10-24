@@ -6,4 +6,5 @@ con = lite.connect('data.db')
 
 with con:
     cur = con.cursor()
-    cur.execute("CREATE TABLE alunos(id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, email TEXT, telefone TEXT, birthday DATE, turma TEXT, nota INTEGER)")
+    cur.execute('''CREATE TABLE IF NOT EXISTS alunos(id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT NOT NULL, email TEXT NOT NULL, telefone TEXT, birthday DATE NOT NULL, turma TEXT NOT NULL, nota INTEGER NOT NULL)''')
+    con.commit()
