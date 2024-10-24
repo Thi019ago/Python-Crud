@@ -129,6 +129,12 @@ def update_info():
                 b_confirm.place_forget()
                 b_cancel.place_forget()
 
+                # Reexibir os botões originais
+                b_insert.place(x=15, y=330)
+                b_update.place(x=105, y=330)
+                b_delete.place(x=195, y=330)
+                b_read.place(x=105, y=365)
+
 
         def cancel_update():
             # Esconder os botões "Confirmar" e "Cancelar"
